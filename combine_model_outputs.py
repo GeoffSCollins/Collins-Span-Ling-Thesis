@@ -135,6 +135,9 @@ for line in first_contents[7:-8]:
 
 # Add the last 8 lines
 output.extend(first_contents[-8:])
+
+if not os.path.exists(os.path.dirname(output_filename)):
+    os.makedirs(os.path.dirname(output_filename))
         
 # Write the output to a file
 with open(output_filename, 'w') as file:
