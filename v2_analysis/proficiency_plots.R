@@ -4,6 +4,9 @@ make_plots <- function(df, group_string) {
   # loop through each adverb class
   for (adverb_class in unique(df$Adverb_Class)) {
     # make a plot
+    filename = paste("proficiency_plots/", paste(gsub(" ", "_", group_string), adverb_class, sep="_"), ".png", sep="")
+    png(filename, width = 450, height = 450)
+
     only_adverb_class_df <- df[df$Adverb_Class %in% c(adverb_class),]
     plot(Rating ~ Proficiency, data = only_adverb_class_df, type = 'n')
 
@@ -42,12 +45,10 @@ make_plots <- function(df, group_string) {
 
     # Add extra space to right of plot area; change clipping to figure
     par(xpd=TRUE)
-    legend("topright", legend = model_names, col = legend_colors, lwd = 1, inset=c(-0.522,0))
+    legend("bottomright", legend = model_names, col = legend_colors, lwd = 1)
     title(main = paste(adverb_class, "adverbs in", group_string))
 
-    # save the plot with legend
-    filename = paste("proficiency_plots/", paste(gsub(" ", "_", group_string), adverb_class, sep="_"), ".png", sep="")
-    dev.copy(png, filename)
+    # finish saving the plot
     dev.off()
     par(xpd=FALSE)
   }
